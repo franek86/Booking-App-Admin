@@ -23,7 +23,6 @@ function CountriesLists() {
   const { deleteCountryMutation } = useDeleteCountry();
 
   const handleOpenDialog = (id: string) => {
-    console.log(id);
     setOpenConfirmDialog(true);
     setSelectedCountryId(id);
   };

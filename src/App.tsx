@@ -10,6 +10,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import Country from "./pages/admin/countries/Country";
 import EditCountry from "./pages/admin/countries/EditCountry";
 import ProtectedRoute from "./components/ProtectedRoute";
+import SailingArea from "./pages/admin/sailing-area/SailingArea";
 
 function App() {
   return (
@@ -29,14 +30,15 @@ function App() {
 
         <Route
           element={
-            <ProtectedRoute>
-              <AdminLayout />
-            </ProtectedRoute>
+            /*  <ProtectedRoute> */
+            <AdminLayout />
+            /* </ProtectedRoute> */
           }
         >
           <Route path='/dashboard' element={<Dashboard />}></Route>
           <Route path='/countries' element={<Country />}></Route>
           <Route path='/countries/:id' element={<EditCountry />}></Route>
+          <Route path='/sailing-area/' element={<SailingArea />}></Route>
         </Route>
       </Routes>
     </Router>

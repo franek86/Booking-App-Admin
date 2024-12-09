@@ -23,7 +23,7 @@ export const footerLinks: linksProps[] = [
 
 export const admminLinks: linksProps[] = [
   { href: "/countries", label: "Countries", icon: Earth },
-  { href: "/saling-area ", label: "Salings area", icon: LandPlot },
+  { href: "/sailing-area ", label: "Sailings area", icon: LandPlot },
   { href: "/bases ", label: "Bases", icon: MapPinHouse },
   { href: "/yachts ", label: "Yachts", icon: Sailboat },
 ];

@@ -4,7 +4,8 @@ import CreateCountry from "@/components/admin/countries/CreateCountry";
 function Country() {
   return (
     <>
-      <div className='w-3/4 inline-flex justify-end'>
+      <div className='flex items-center justify-between'>
+        <h1 className='main-heading'>Countries</h1>
         <CreateCountry />
       </div>
       <CountriesLists />
