@@ -8,9 +8,6 @@ type TableProps = {
   columns: string;
   children: React.ReactNode;
 };
-type TableHeaderProps = {
-  children: React.ReactNode;
-};
 
 const TableContext = createContext<TableContextProps>({ columns: "" });
 
@@ -22,17 +19,28 @@ function Table({ columns, children }: TableProps) {
   );
 }
 
-function Header({ children }: TableHeaderProps) {
+function Header({ children }: { children: React.ReactNode }) {
   const { columns } = useContext(TableContext);
 
-  return <header className={`grid grid-cols-${columns} text-sm p-4 font-bold border-b border-gray-200`}>{children}</header>;
+  return (
+    <header
+      className='grid text-sm p-4 font-bold border-b border-gray-200'
+      style={columns ? { gridTemplateColumns: `${columns}` } : undefined}
+    >
+      {children}
+    </header>
+  );
 }
-function Row({ children }: TableHeaderProps) {
+function Row({ children }: { children: React.ReactNode }) {
   const { columns } = useContext(TableContext);
 
-  return <div className={`grid grid-cols-${columns} text-sm p-4 border-b border-gray-200`}>{children}</div>;
+  return (
+    <div className='grid text-sm p-4 border-b border-gray-200' style={columns ? { gridTemplateColumns: `${columns}` } : undefined}>
+      {children}
+    </div>
+  );
 }
-function Body({ children }: TableHeaderProps) {
+function Body({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 

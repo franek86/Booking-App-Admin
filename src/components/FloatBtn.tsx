@@ -1,11 +1,14 @@
+import { createPortal } from "react-dom";
 import { createContext, useContext, useState } from "react";
 import { Ellipsis, Eye, Pencil, Trash2 } from "lucide-react";
-import { createPortal } from "react-dom";
+
 type Position = { x: number; y: number };
 
 type FloatBtnProps = {
   children: React.ReactNode;
-  open: string;
+  openCurrent: string;
+  close: () => void;
+  open: React.Dispatch<React.SetStateAction<string>>;
   position: Position;
   setPosition: React.Dispatch<React.SetStateAction<Position>>;
 };
@@ -13,10 +16,14 @@ type FloatBtnProps = {
 const FloatBtnContext = createContext<FloatBtnProps | undefined>(undefined);
 
 function FloatBtn({ children }: { children: React.ReactNode }) {
-  const [open, setOpen] = useState("");
+  const [openCurrent, setOpenCurrent] = useState("");
   const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
+  const close = () => setOpenCurrent("");
+  const open = setOpenCurrent;
 
-  return <FloatBtnContext.Provider value={{ children, open, position, setPosition }}>{children}</FloatBtnContext.Provider>;
+  return (
+    <FloatBtnContext.Provider value={{ children, openCurrent, close, open, position, setPosition }}>{children}</FloatBtnContext.Provider>
+  );
 }
 
 function Toggle({ current }: { current: string }) {
@@ -26,18 +33,16 @@ function Toggle({ current }: { current: string }) {
     throw new Error("Toggle must be used within a FloatBtnProvider");
   }
 
-  const { setPosition, position } = context;
+  const { setPosition, openCurrent, open, close } = context;
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
-
     const rect = target.closest("div")?.getBoundingClientRect();
     setPosition({
-      x: window.innerWidth - (rect?.width ?? 0) - (rect?.x ?? 0),
+      x: window.innerWidth - (rect?.x ?? 0),
       y: (rect?.y ?? 0) + (rect?.height ?? 0) + 0,
     });
-    console.log(rect);
-    console.log(window.innerWidth - (rect?.width ?? 0) - (rect?.x ?? 0));
+    openCurrent === "" || openCurrent !== current ? open(current) : close();
   };
   return (
     <div className='cursor-pointer' onClick={handleClick}>
@@ -52,13 +57,15 @@ function Box({ current }: { current: string }) {
     throw new Error("Toggle must be used within a FloatBtnProvider");
   }
 
-  const { position } = context;
+  const { position, openCurrent } = context;
 
-  /*   const stylePositionTop = position?.x ? `top-[${position?.x}]px` : "";
-  const stylePositionRight = position?.y ? `right-[${position?.y}]px` : ""; */
+  if (openCurrent !== current) return null;
 
   return createPortal(
-    <div className={`fixed bg-white shadow-md rounded-md top-[${position?.y}px] right-[${position?.x}px]`}>
+    <div
+      className='fixed bg-white shadow-md rounded-md'
+      style={position ? { top: `${position.y}px`, right: `${position.x}px` } : undefined}
+    >
       <div className='flex gap-2 p-3 cursor-pointer hover:bg-gray-100 transition-all'>
         <Eye size='1.2rem' />
         <div className='text-sm'>View</div>
