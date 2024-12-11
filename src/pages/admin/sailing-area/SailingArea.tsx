@@ -1,3 +1,4 @@
+import SailingAreaLists from "@/components/admin/sailing-area/sailingAreaLists";
 import FloatBtn from "@/components/FloatBtn";
 import Table from "@/components/Table";
 
@@ -5,7 +6,7 @@ function SailingArea() {
   return (
     <>
       <h1 className='main-heading'>Sailing Area</h1>
-
+      <SailingAreaLists />
       <FloatBtn>
         <Table columns='1fr 1fr 1fr 50px'>
           <Table.Header>

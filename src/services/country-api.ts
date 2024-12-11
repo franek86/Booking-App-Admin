@@ -1,5 +1,5 @@
 import apiClient from "@/util/axiosConfig";
-import { CountiresType, CountriesResponseType } from "@/lib/types";
+import { CountriesType, CountriesResponseType } from "@/lib/types";
 
 /* Get all countires api */
 export const getCountires = async (page: number, perPage: number): Promise<CountriesResponseType> => {
@@ -12,17 +12,17 @@ export const getCountires = async (page: number, perPage: number): Promise<Count
 };
 
 /* Fetch single country by id */
-export const fetchSingleCountry = async (id?: string): Promise<CountiresType> => {
+export const fetchSingleCountry = async (id?: string): Promise<CountriesType> => {
   try {
     const response = await apiClient.get(`/countries/${id}`);
-    return response.data.data as CountiresType;
+    return response.data.data as CountriesType;
   } catch (error) {
     throw error;
   }
 };
 
 /* Create country */
-export const createCountry = async (formData: CountiresType): Promise<CountiresType> => {
+export const createCountry = async (formData: CountriesType): Promise<CountriesType> => {
   try {
     const data = new FormData();
     data.append("name", formData.name);
@@ -52,7 +52,7 @@ export const deleteCountry = async (id: string) => {
 };
 
 /* TO DO: Update country by id api */
-export const editCountry = async (id: string, formData: CountiresType): Promise<CountiresType> => {
+export const editCountry = async (id: string, formData: CountriesType): Promise<CountriesType> => {
   try {
     const { name, shortCountryCode, longCountryCode, iconFlag } = formData;
 

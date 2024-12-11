@@ -6,6 +6,13 @@ export type ToastMessageType = {
   onClose?: () => void;
 };
 
+export type Pagination = {
+  page: number;
+  total: number;
+  totalPages: number;
+  perPage: number;
+};
+
 export type RegisterUserType = {
   firstname: string;
   lastname: string;
@@ -71,7 +78,7 @@ export type SelectInputType = {
   value: string;
 };
 
-export type CountiresType = {
+export type CountriesType = {
   _id: string;
   name: string;
   shortCountryCode: string;
@@ -80,11 +87,23 @@ export type CountiresType = {
 };
 
 export type CountriesResponseType = {
-  countries: CountiresType[];
+  countries: CountriesType[];
   page: number;
   total: number;
   totalPages: number;
   perPage: number;
+};
+
+export type SailingAreaType = {
+  _id: string;
+  area: string;
+  countryIds: Pick<CountriesType, "_id" | "name">[];
+  countryCount: number;
+};
+
+export type SailingAreaResponseType = {
+  data: SailingAreaType[];
+  pagination: Pagination;
 };
 
 export type DestinationProps = {
